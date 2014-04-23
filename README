@@ -1,1 +1,70 @@
-Talk to Bugzilla
+Snolla - Connect gitlab with bugzilla.
+
+Author: Florian Preinstorfer <nblock@archlinux.org>
+License: AGPLv3
+
+Requirements
+============
+The list below lists the requirements to run snolla. The debian package names are listed second.
+
+  * Python 3.3+: python3 python-virtualenv
+  * Nginx: nginx
+  * Uwsgi: uwsgi uwsgi-plugin-python3
+
+First time installation
+=======================
+Below is a list of neccessary steps to get snolla up and running.
+
+Application
+-----------
+
+  * Install dependencies from above.
+  * Get a copy of snolla.
+  * Setup virtualenv
+    $ cd snolla
+    $ virtualenv --no-site-packages snolla ~/path/to/venv
+    $ source ~/path/to/venv/bin/activate
+    $ pip install -r requirements.txt   # install snolla dependencies
+
+Uwsgi
+-----
+  * Create a new profile for snolla in /etc/uwsgi/apps-available/snolla.ini
+    [uwsgi]
+    uid = www-data
+    gid = www-data
+    chmod-socket = 666
+    master = true
+    enable-threads = true
+    processes = 2
+    lazy = true
+    plugins = python3
+    chdir = /path/to/snolla
+    virtualenv = /path/to/venv
+    module = snolla
+    callable = create_app()
+
+  * Activate profile:
+    $ sudo ln -s /etc/uwsgi/apps-available/snolla.ini /etc/uwsgi/apps-enabled/snolla.ini
+
+Nginx
+-----
+  * Create a nginx config:
+    server {
+            listen   80; ## listen for ipv4; this line is default and implied
+            listen   [::]:80 default_server ipv6only=on; ## listen for ipv6
+
+            root /usr/share/nginx/www;
+            index index.html index.htm;
+
+            # Make site accessible from http://localhost/
+            server_name localhost snolla;
+
+            location / { try_files $uri @snolla; }
+            location @snolla {
+                include uwsgi_params;
+                uwsgi_pass unix:/run/uwsgi/app/snolla/socket;
+            }
+    }
+
+  * Activate config:
+    $ sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default

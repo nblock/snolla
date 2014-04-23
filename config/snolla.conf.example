@@ -1,0 +1,63 @@
+# Configuration example for Snolla.
+# The options present denote the default values.
+
+
+# General settings.
+[general]
+
+# A list of allowed origins in short git refspec notation.
+# Example:
+# master, --> allow only commits from master
+# master, bugfix/ --> allow commits from master and bugfix/*
+allowed_origins = 'master',
+
+# The regular expression to extract the action and the bugid from commit
+# messages. It must provide the match groups 'action' and 'bugid' in order to
+# retrieve information. The regular expression will be used as is and will be
+# compiled with: multiline | ignorecase.
+extract_regex = '(?P<action>\w+)?:?\s*#(?P<bugid>\d+)'
+
+# The loglevel to use. This setting maps directly to the predefined loglevels
+# in the logging module: CRITICAL, ERROR, WARNING, INFO, DEBUG, NOTSET
+loglevel = 'INFO'
+
+
+# How actions relate to bugzilla tasks.
+# The following bugzilla tasks are available and may be enabled
+#  - comment
+[tasks]
+
+# Settings for the bugzilla comment task.
+[[comment]]
+
+# Is the comment task enabled?
+enabled = True
+
+# A list of keywords that trigger this bugzilla task.
+keywords = 'comment', 'comments', 'mention', 'mentions', 'see', 'seealso'
+
+# The template to add a new comment to bugzilla.
+template = '''author: {author_name} <{author_email}>
+url: {url}
+branch: {origin}
+message: {message}'''
+
+
+# Settings for communicating with bugzilla.
+[bugzilla]
+
+# The URL of the Bugzilla xmlrpc interface.
+url = 'http://192.168.122.151/bugzilla/xmlrpc.cgi'
+
+# The username to connect to bugzilla.
+username = 'snolla@test.lan'
+
+# The password to connect to bugzilla.
+password = 'thesnollabot'
+
+# The path to python-bugzilla's bugzilla binary.
+bugzilla_path = 'bugzilla'
+
+# Additional arguments to pass to python-bugzilla's bugzilla binary.
+# A single comma denotes no additional arguments.
+bugzilla_additional_args = ,

@@ -1,0 +1,12 @@
+#!/usr/bin/python
+# This file is part of snolla. See README for more information.
+
+import snolla
+
+if __name__ == '__main__':
+    """main"""
+    from werkzeug.serving import run_simple
+    app = snolla.create_app()
+    run_simple('127.0.0.1', 5000, app, use_debugger=True, use_reloader=True)
+
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 smartindent autoindent

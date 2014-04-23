@@ -1,0 +1,8 @@
+- Configuration handling:
+  - [tasks][comment][template]: is not the same as the default (no multiline possible?)
+
+- Documentation
+
+- Tests
+
+- clean shutdown of threads
