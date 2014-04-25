@@ -3,6 +3,8 @@
 
 - Documentation
 
+- Replace python-virtualenv with the builtin venv module
+
 - Tests
 
 - clean shutdown of threads

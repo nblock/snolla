@@ -5,7 +5,7 @@ License: AGPLv3
 
 Requirements
 ============
-The list below lists the requirements to run snolla. The debian package names are listed second.
+The list below enumerates the requirements to run snolla. The debian package names are listed second.
 
   * Python 3.3+: python3 python-virtualenv
   * Nginx: nginx
@@ -21,10 +21,10 @@ Application
   * Install dependencies from above.
   * Get a copy of snolla.
   * Setup virtualenv
+    $ virtualenv --python=python3 --no-site-packages /path/to/venv
+    $ source /path/to/venv/bin/activate
     $ cd snolla
-    $ virtualenv --no-site-packages snolla ~/path/to/venv
-    $ source ~/path/to/venv/bin/activate
-    $ pip install -r requirements.txt   # install snolla dependencies
+    $ pip install -r requirements/minimum.txt  # install minimum snolla dependencies
 
 Uwsgi
 -----
@@ -48,7 +48,7 @@ Uwsgi
 
 Nginx
 -----
-  * Create a nginx config:
+  * Create a nginx config for snolla in /etc/nginx/sites-available/nginx:
     server {
             listen   80; ## listen for ipv4; this line is default and implied
             listen   [::]:80 default_server ipv6only=on; ## listen for ipv6
@@ -67,4 +67,4 @@ Nginx
     }
 
   * Activate config:
-    $ sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+    $ sudo ln -s /etc/nginx/sites-available/nginx /etc/nginx/sites-enabled/nginx
