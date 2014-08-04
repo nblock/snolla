@@ -3,3 +3,6 @@
 Werkzeug>=0.9.6
 configobj>=5.0.5
 python-bugzilla>=1.1.0
+
+# Requests is required by python-bugzilla
+requests>=2.3.0
