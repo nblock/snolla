@@ -1,0 +1,5 @@
+# The development requirements for snolla.
+-r minimum.txt
+
+# Code coverage support
+coverage>=3.7.1
